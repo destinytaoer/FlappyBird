@@ -27,6 +27,8 @@ class Game {
 
     // 主定时器
     this.timer = null;
+    // 移动速度
+    this.speed = 1;
 
     this.init();
   }
@@ -38,8 +40,15 @@ class Game {
     this.ctx.clearRect(0, 0, width, height);
   }
   start() {
+    this.clear();
+    this.bg = new Background(this);
+    this.land = new Land(this);
     // 游戏的每一帧
-    this.timer = setInterval(() => {}, 20);
+    this.timer = setInterval(() => {
+      this.clear();
+      this.bg.update(this.speed); // 背景更新
+      this.land.update(this.speed); // 地面的更新
+    }, 20);
   }
   loadImg() {
     let count = 0;
