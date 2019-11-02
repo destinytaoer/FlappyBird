@@ -38,6 +38,7 @@ class Game {
   }
   init() {
     this.loadImg();
+    this.bindEvents();
   }
   clear() {
     let { width, height } = this.canvas;
@@ -48,7 +49,7 @@ class Game {
     this.bg = new Background(this);
     this.land = new Land(this);
     this.pipes = new Set();
-    this.pipes.add(new Pipe(this)); // 先出现一个管道
+    this.bird = new Bird(this);
     // 游戏的每一帧
     this.timer = setInterval(() => {
       this.clear();
@@ -60,10 +61,10 @@ class Game {
         // 出现一个管道
         let pipe = new Pipe(this);
         this.pipes.add(pipe);
-        console.log(this.pipes);
       }
       // 将存放的管道都进行更新
       this.pipes.forEach(pipe => pipe.update());
+      this.bird.update(); // 小鸟的更新
     }, 20);
   }
   loadImg() {
@@ -89,6 +90,11 @@ class Game {
         }
       };
     });
+  }
+  bindEvents() {
+    this.canvas.onclick = () => {
+      this.bird && this.bird.fly();
+    };
   }
 }
 let game = new Game();
