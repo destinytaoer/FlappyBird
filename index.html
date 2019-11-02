@@ -23,13 +23,18 @@
       // 将初始化画布大小放到最前面, 保证初始渲染画面大小
       let canvas = document.getElementById('canvas');
       // 初始化画布大小
-      let w = document.documentElement.clientWidht || document.body.clientWidth;
-      let h =
-        document.documentElement.clientHeight || document.body.clientHeight;
+      function initSize() {
+        let w =
+          document.documentElement.clientWidht || document.body.clientWidth;
+        let h =
+          document.documentElement.clientHeight || document.body.clientHeight;
 
-      // 设置画布的宽高
-      this.canvas.width = w > 420 ? 420 : w;
-      this.canvas.height = h > 750 ? 750 : h;
+        // 设置画布的宽高
+        this.canvas.width = w > 420 ? 420 : w;
+        this.canvas.height = h > 750 ? 750 : h;
+      }
+      initSize();
+      window.onresize = () => initSize();
     </script>
     <script src="./js/process.js"></script>
     <script src="./js/background.js"></script>
