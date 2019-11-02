@@ -50,12 +50,21 @@ class Game {
     this.land = new Land(this);
     this.pipes = new Set();
     this.bird = new Bird(this);
+
+    let init = true;
+    const firstPipe = 50;
     // 游戏的每一帧
     this.timer = setInterval(() => {
       this.clear();
       this.bg.update(); // 背景更新
       this.land.update(); // 地面的更新
       this.frame++;
+      if (init && this.frame === firstPipe) {
+        // 定义管道的首次出现
+        this.pipes.add(new Pipe(this));
+        this.frame = 0;
+        init = false;
+      }
       if (this.frame === this.pipeSpeed) {
         this.frame = 0;
         // 出现一个管道
