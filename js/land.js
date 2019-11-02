@@ -6,6 +6,9 @@ class Land {
     this.bgImg = bgImg;
     this.game = game;
 
+    // 由于背景图片与地面图片是分开的, 而背景图片是直接按照屏幕大小缩放的,所以要创建的地面图片必须是按比例来计算的
+    this.landScale = 124 / 512;
+
     this.offset = 0;
   }
   update(speed) {
@@ -18,7 +21,20 @@ class Land {
   render() {
     let { game, bgImg } = this;
     let { width, height } = game.canvas;
-    game.ctx.drawImage(bgImg, this.offset, height - 180, width, 180);
-    game.ctx.drawImage(bgImg, width + this.offset, height - 180, width, 180);
+    let landHeight = height * this.landScale;
+    game.ctx.drawImage(
+      bgImg,
+      this.offset,
+      height - landHeight,
+      width,
+      landHeight
+    );
+    game.ctx.drawImage(
+      bgImg,
+      width + this.offset,
+      height - landHeight,
+      width,
+      landHeight
+    );
   }
 }
