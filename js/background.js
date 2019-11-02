@@ -8,8 +8,8 @@ class Background {
 
     this.offset = 0; // 用于动画的偏移
   }
-  update(speed) {
-    this.offset -= speed; // 从右往左走
+  update() {
+    this.offset -= this.game.speed; // 从右往左走
     if (Math.abs(this.offset) >= this.game.canvas.width) {
       this.offset = this.game.canvas.width + this.offset;
     }

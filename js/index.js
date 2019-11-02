@@ -29,6 +29,10 @@ class Game {
     this.timer = null;
     // 移动速度
     this.speed = 1;
+    // 记录管子出现前的帧数
+    this.frame = 0;
+    // 管子出现的帧数, 通过帧数来控制管道出现的间隔
+    this.pipeSpeed = 250;
 
     this.init();
   }
@@ -43,11 +47,23 @@ class Game {
     this.clear();
     this.bg = new Background(this);
     this.land = new Land(this);
+    this.pipes = new Set();
+    this.pipes.add(new Pipe(this)); // 先出现一个管道
     // 游戏的每一帧
     this.timer = setInterval(() => {
       this.clear();
-      this.bg.update(this.speed); // 背景更新
-      this.land.update(this.speed); // 地面的更新
+      this.bg.update(); // 背景更新
+      this.land.update(); // 地面的更新
+      this.frame++;
+      if (this.frame === this.pipeSpeed) {
+        this.frame = 0;
+        // 出现一个管道
+        let pipe = new Pipe(this);
+        this.pipes.add(pipe);
+        console.log(this.pipes);
+      }
+      // 将存放的管道都进行更新
+      this.pipes.forEach(pipe => pipe.update());
     }, 20);
   }
   loadImg() {

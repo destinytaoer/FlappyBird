@@ -11,8 +11,8 @@ class Land {
 
     this.offset = 0;
   }
-  update(speed) {
-    this.offset -= speed;
+  update() {
+    this.offset -= this.game.speed;
     if (Math.abs(this.offset) >= this.game.canvas.width) {
       this.offset = this.game.canvas.width + this.offset;
     }
