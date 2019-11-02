@@ -30,7 +30,9 @@ class Game {
 
     this.init();
   }
-  init() {}
+  init() {
+    this.loadImg();
+  }
   clear() {
     let { width, height } = this.canvas;
     this.ctx.clearRect(0, 0, width, height);
@@ -38,6 +40,30 @@ class Game {
   start() {
     // 游戏的每一帧
     this.timer = setInterval(() => {}, 20);
+  }
+  loadImg() {
+    let count = 0;
+    let total = this.imgs.size;
+    let { ctx, canvas } = this;
+    let { width, height } = canvas;
+    let pw = width - 60; // 进度条宽度
+    let ph = 30; // 进度条高度
+    let process = new Process(ctx, 30, height / 3, pw, ph);
+    this.imgs.forEach((src, key) => {
+      let img = new Image();
+      img.src = src;
+      img.onload = () => {
+        this.imgs.set(key, img);
+        process.update((pw / total) * ++count);
+        // 如果全部加载完成, 则开始游戏
+        if (count === total) {
+          // 一定延时之后, 开启游戏
+          setTimeout(() => {
+            this.start();
+          }, 200);
+        }
+      };
+    });
   }
 }
 let game = new Game();
