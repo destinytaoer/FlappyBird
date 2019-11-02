@@ -7,22 +7,22 @@ class Game {
     this.canvas = canvas;
     this.ctx = ctx;
     this.imgs = new Map([
-      ['bg_day', '../imgs/bg_day.png'],
-      ['bird2_0', '../imgs/bird2_0.png'],
-      ['bird2_1', '../imgs/bird2_1.png'],
-      ['bird2_2', '../imgs/bird2_2.png'],
-      ['button_play', '../imgs/button_play.png'],
-      ['ground', '../imgs/ground.png'],
-      ['pipe_up', '../imgs/pipe_up.png'],
-      ['pipe_down', '../imgs/pipe_down.png'],
-      ['pipe', '../imgs/pipe.png'],
-      ['tap', '../imgs/tap.png'],
-      ['text_game_over', '../imgs/text_game_over.png'],
-      ['title', '../imgs/title.png'],
-      ['scene_1', '../imgs/scene_1.jpg'],
-      ['scene_2', '../imgs/scene_2.jpg'],
-      // ['scene_3', '../imgs/scene_3.jpg'],
-      ['scene_4', '../imgs/scene_4.jpg']
+      ['bg_day', '/imgs/bg_day.png'],
+      ['bird2_0', '/imgs/bird2_0.png'],
+      ['bird2_1', '/imgs/bird2_1.png'],
+      ['bird2_2', '/imgs/bird2_2.png'],
+      ['button_play', '/imgs/button_play.png'],
+      ['ground', '/imgs/ground.png'],
+      ['pipe_up', '/imgs/pipe_up.png'],
+      ['pipe_down', '/imgs/pipe_down.png'],
+      ['pipe', '/imgs/pipe.png'],
+      ['tap', '/imgs/tap.png'],
+      ['text_game_over', '/imgs/text_game_over.png'],
+      ['title', '/imgs/title.png'],
+      ['scene_1', '/imgs/scene_1.jpg'],
+      ['scene_2', '/imgs/scene_2.jpg'],
+      // ['scene_3', '/imgs/scene_3.jpg'],
+      ['scene_4', '/imgs/scene_4.jpg']
     ]);
 
     // 主定时器
