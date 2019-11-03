@@ -24,11 +24,12 @@ class Game {
       // ['scene_3', './imgs/scene_3.jpg'],
       ['scene_4', './imgs/scene_4.jpg']
     ]);
+    this.sceneNo = 1; // 记录当前的场景编号, 初始是第一个场景
 
     // 主定时器
     this.timer = null;
-    // 移动速度
-    this.speed = 1;
+    // 移动速度, 初始移动速度为 0
+    this.speed = 0;
     // 记录管子出现前的帧数
     this.frame = 0;
     // 管子出现的帧数, 通过帧数来控制管道出现的间隔
@@ -48,34 +49,13 @@ class Game {
   }
   start() {
     this.clear();
-    this.bg = new Background(this);
-    this.land = new Land(this);
-    this.pipes = new Set();
-    this.bird = new Bird(this);
-
-    let init = true;
-    const firstPipe = 50;
+    this.sm = new SceneManager(this);
+    this.sm.enter(1);
     // 游戏的每一帧
     this.timer = setInterval(() => {
       this.clear();
-      this.bg.update(); // 背景更新
-      this.land.update(); // 地面的更新
+      this.sm.update();
       this.frame++;
-      if (init && this.frame === firstPipe) {
-        // 定义管道的首次出现
-        this.pipes.add(new Pipe(this));
-        this.frame = 0;
-        init = false;
-      }
-      if (this.frame === this.pipeSpeed) {
-        this.frame = 0;
-        // 出现一个管道
-        let pipe = new Pipe(this);
-        this.pipes.add(pipe);
-      }
-      // 将存放的管道都进行更新
-      this.pipes.forEach(pipe => pipe.update());
-      this.bird.update(); // 小鸟的更新
     }, 20);
   }
   stop() {
