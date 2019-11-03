@@ -8,6 +8,7 @@ class Pipe {
     this.pipe_up = pipe_up;
     this.game = game;
     this.space = space || 140; // 管道之间的空隙
+    this.isPass = false; // 判断 bird 是否经过了管道
 
     // 每次生成一个实例时, 就生成一个随机的高度不再变化
     let { width, height } = game.canvas;
@@ -41,6 +42,9 @@ class Pipe {
       // 碰撞到了
       game.stop();
       console.log('game over');
+    } else if (bird.x2 > this.x2 && !this.isPass) {
+      this.isPass = true;
+      game.score++;
     }
 
     this.render();

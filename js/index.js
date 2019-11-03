@@ -34,6 +34,8 @@ class Game {
     // 管子出现的帧数, 通过帧数来控制管道出现的间隔
     this.pipeSpeed = 250;
 
+    this.score = 0; // 记录分数
+
     this.init();
   }
   init() {
