@@ -10,16 +10,21 @@ class Background {
   }
   update() {
     this.offset -= this.game.speed; // 从右往左走
-    if (Math.abs(this.offset) >= this.game.canvas.width) {
-      this.offset = this.game.canvas.width + this.offset;
+    if (Math.abs(this.offset) >= this.w) {
+      this.offset = this.w + this.offset;
     }
     this.render();
   }
   render() {
-    let { game, bgImg } = this;
+    let { game, bgImg, w, h } = this;
     let { width, height } = game.canvas;
-    game.ctx.drawImage(bgImg, this.offset, 0, width, height);
-    // 再补充一张用于动画
-    game.ctx.drawImage(bgImg, width + this.offset, 0, width, height);
+    game.ctx.fillStyle = '#4fc0ca';
+    // 补充不够图片不够的地方
+    game.ctx.fillRect(0, 0, width, height);
+    // 保持原比例
+    game.ctx.drawImage(bgImg, this.offset, height - h);
+    // 再补充两张用于动画
+    game.ctx.drawImage(bgImg, w + this.offset, height - h);
+    game.ctx.drawImage(bgImg, 2 * w + this.offset, height - h);
   }
 }
