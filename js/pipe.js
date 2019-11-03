@@ -25,6 +25,24 @@ class Pipe {
       // 说明管道已经离开了画面
       game.pipes.delete(this);
     }
+    // 记录管子的边界范围, 用于碰撞检测
+    this.x1 = this.offset;
+    this.x2 = this.w + this.offset;
+    this.y1 = this.h_down;
+    this.y2 = this.h_down + this.space;
+
+    // 碰撞检测
+    let bird = game.bird;
+    if (
+      bird.x2 > this.x1 &&
+      bird.x1 < this.x2 &&
+      (bird.y1 < this.y1 || bird.y2 > this.y2)
+    ) {
+      // 碰撞到了
+      game.stop();
+      console.log('game over');
+    }
+
     this.render();
   }
   render() {

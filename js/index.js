@@ -76,6 +76,9 @@ class Game {
       this.bird.update(); // 小鸟的更新
     }, 20);
   }
+  stop() {
+    clearInterval(this.timer);
+  }
   loadImg() {
     let count = 0;
     let total = this.imgs.size;

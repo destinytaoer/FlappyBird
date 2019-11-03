@@ -49,8 +49,15 @@ class Bird {
     this.y < minHeight ? (this.y = minHeight) : null;
     if (this.y >= maxHeight) {
       this.y = maxHeight;
+      game.stop();
       console.log('game over');
     }
+    // 记录 bird 的当前坐标范围, 用于碰撞检测
+    // bird 范围相对图片较小, x y 坐标其实是现在 bird 的中心坐标
+    this.x1 = this.x - 17;
+    this.x2 = this.x + 17;
+    this.y1 = this.y - 12;
+    this.y2 = this.y + 12;
     this.render();
   }
   fly() {
@@ -58,13 +65,13 @@ class Bird {
     this.rotate = -60; // 角度上扬
   }
   render() {
-    let { game, x, y } = this;
+    let { game, x, y, wing, rotate, w, h } = this;
     let { ctx } = game;
-    let bird = this[`birdImg_${this.wing}`];
+    let bird = this[`birdImg_${wing}`];
     ctx.save();
-    ctx.translate(this.x, this.y); // 移动旋转中心
-    ctx.rotate((this.rotate * Math.PI) / 180);
-    ctx.drawImage(bird, -this.w / 2, -this.h / 2);
+    ctx.translate(x, y); // 移动旋转中心
+    ctx.rotate((rotate * Math.PI) / 180);
+    ctx.drawImage(bird, -w / 2, -h / 2);
     ctx.restore();
   }
 }
