@@ -56,7 +56,7 @@ class Pipe {
       0, // sx
       this.h_down > this.h ? 0 : this.h - this.h_down, //sy
       this.w, // swidth
-      this.h_down, // sheight
+      this.h_down > this.h ? this.h : this.h_down, // sheight
       this.offset, // dx
       0, // dy
       this.w, // dwidth
