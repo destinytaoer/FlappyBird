@@ -1,5 +1,5 @@
 class Pipe {
-  constructor(game) {
+  constructor(game, space) {
     let pipe_down = game.imgs.get('pipe_down');
     let pipe_up = game.imgs.get('pipe_up');
     this.w = pipe_down.width;
@@ -7,14 +7,17 @@ class Pipe {
     this.pipe_down = pipe_down;
     this.pipe_up = pipe_up;
     this.game = game;
+    this.space = space || 140; // 管道之间的空隙
 
     // 每次生成一个实例时, 就生成一个随机的高度不再变化
-    this.h_down = Math.round(Math.random() * 200 + 100); // 范围为 100 - 300
-
+    let { width, height } = game.canvas;
+    const landHeight = 120;
+    let restHeight = height - landHeight - this.space;
+    this.h_down = Math.round(Math.random() * (restHeight - 120) + 60); //范围为 60 - max
+    this.h_up = restHeight - this.h_down;
     this.offset = game.canvas.width;
   }
-  update(space) {
-    this.space = space || 140;
+  update() {
     let { game } = this;
     this.offset -= game.speed;
     let leaveOffset = -this.w;
@@ -26,14 +29,10 @@ class Pipe {
   }
   render() {
     let { game, pipe_down, pipe_up } = this;
-    let { width, height } = game.canvas;
-    this.space = 140;
-    const landHeight = (height * 124) / 512;
-    this.h_up = height - landHeight - this.h_down - this.space;
     game.ctx.drawImage(
       pipe_down,
       0, // sx
-      this.h - this.h_down, //sy
+      this.h_down > this.h ? 0 : this.h - this.h_down, //sy
       this.w, // swidth
       this.h_down, // sheight
       this.offset, // dx
@@ -46,7 +45,7 @@ class Pipe {
       0,
       0,
       this.w,
-      this.h_up,
+      this.h_up > this.h ? this.h : this.h_up,
       this.offset,
       this.h_down + this.space,
       this.w,

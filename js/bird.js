@@ -24,7 +24,7 @@ class Bird {
   update() {
     let { game } = this;
     let { height } = game.canvas;
-    const landHeight = (height * 124) / 512;
+    const landHeight = 120;
     // 速度处理
     this.speed += this.g;
     if (this.speed < 0) {
@@ -43,9 +43,12 @@ class Bird {
     this.rotate = this.rotate > 75 ? 75 : this.rotate; // 角度最大为 75
     // y 坐标处理
     this.y += this.speed;
-    this.y < this.w / 2 ? (this.y = this.w / 2) : null;
-    if (this.y >= height - landHeight) {
-      this.y = height - landHeight;
+    // bird 的活动范围, 最大最小高度
+    let minHeight = this.w / 2 - 10;
+    let maxHeight = height - landHeight - 10;
+    this.y < minHeight ? (this.y = minHeight) : null;
+    if (this.y >= maxHeight) {
+      this.y = maxHeight;
       console.log('game over');
     }
     this.render();
