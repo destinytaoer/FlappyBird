@@ -29,7 +29,7 @@ class SceneManager {
         this.birdX = (width - this.birdImg.width) / 2;
         this.birdY = (height - this.birdImg.height) / 2;
         this.birdMaxH = this.btnH - this.birdImg.height - 20;
-        this.birdMinH = this.titleH + this.titleImg.height + 20;
+        this.birdMinH = this.birdMaxH - 80;
         this.birdChangeY = 2;
         break;
       case 2:
