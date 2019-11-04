@@ -22,7 +22,17 @@ class Game {
       ['scene_1', './imgs/scene_1.jpg'],
       ['scene_2', './imgs/scene_2.jpg'],
       // ['scene_3', './imgs/scene_3.jpg'],
-      ['scene_4', './imgs/scene_4.jpg']
+      ['scene_4', './imgs/scene_4.jpg'],
+      ['score_0', './imgs/score_0.png'],
+      ['score_1', './imgs/score_1.png'],
+      ['score_2', './imgs/score_2.png'],
+      ['score_3', './imgs/score_3.png'],
+      ['score_4', './imgs/score_4.png'],
+      ['score_5', './imgs/score_5.png'],
+      ['score_6', './imgs/score_6.png'],
+      ['score_7', './imgs/score_7.png'],
+      ['score_8', './imgs/score_8.png'],
+      ['score_9', './imgs/score_9.png']
     ]);
     this.sceneNo = 1; // 记录当前的场景编号, 初始是第一个场景
 

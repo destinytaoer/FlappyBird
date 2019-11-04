@@ -42,7 +42,7 @@ class Pipe {
       // 碰撞到了
       game.stop();
       console.log('game over');
-    } else if (bird.x2 > this.x2 && !this.isPass) {
+    } else if (bird.x1 > this.x2 && !this.isPass) {
       this.isPass = true;
       game.score++;
     }

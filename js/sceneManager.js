@@ -105,14 +105,32 @@ class SceneManager {
         } else {
           this.pipeTime++;
         }
-
         // 将存放的管道都进行更新
         pipes.forEach(pipe => pipe.update());
         bird.update(); // 小鸟的更新
+        this.scoreRender();
         break;
       case 4:
         break;
     }
+  }
+  scoreRender() {
+    let { game } = this;
+    let score = this.game.score;
+    let scoreStr = score.toString();
+    let { width, height } = game.canvas;
+    const numWidth = 30;
+    const numHeight = (numWidth / 2) * 3;
+    let x = (width - scoreStr.length * (numWidth + 2) + 2) / 2; // 水平坐标
+    [...scoreStr].forEach((num, i) => {
+      game.ctx.drawImage(
+        game.imgs.get(`score_${num}`),
+        x + i * (numWidth + 2),
+        height / 6,
+        numWidth,
+        numHeight
+      );
+    });
   }
   bindEvents() {
     let { game } = this;
@@ -130,9 +148,11 @@ class SceneManager {
           }
           break;
         case 2:
+          // 只要点击了, 游戏就会开始
           this.enter(3);
           break;
         case 3:
+          // 点击屏幕, 小鸟向上飞
           game.bird && game.bird.fly();
           break;
         case 4:
