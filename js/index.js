@@ -41,7 +41,6 @@ class Game {
   }
   init() {
     this.loadImg();
-    this.bindEvents();
   }
   clear() {
     let { width, height } = this.canvas;
@@ -84,11 +83,6 @@ class Game {
         }
       };
     });
-  }
-  bindEvents() {
-    this.canvas.onclick = () => {
-      this.bird && this.bird.fly();
-    };
   }
 }
 let game = new Game();
