@@ -109,6 +109,7 @@ class SceneManager {
     land.update();
     switch (game.sceneNo) {
       case 1:
+      case 7:
         // 开始游戏按钮界面
         // 绘制游戏标题
         this.titleY >= this.titleH
@@ -123,7 +124,7 @@ class SceneManager {
         ctx.drawImage(this.birdImg, this.birdX, this.birdY);
         // 绘制按钮
         this.btnY <= this.btnH
-          ? (this.btnY = this.btnH)
+          ? ((this.btnY = this.btnH), this.enter(7))
           : (this.btnY -= this.btnChangeY);
         ctx.drawImage(this.btnImg, this.btnX, this.btnY);
         break;
@@ -196,6 +197,7 @@ class SceneManager {
         ctx.restore();
         break;
       case 6:
+      case 8:
         // 游戏结束颁奖界面
         pipes.forEach(pipe => pipe.render());
         this.gameOverY >= this.gameOverH
@@ -232,8 +234,9 @@ class SceneManager {
         ctx.fillText('0', this.panelX + this.panelW - 52, this.panelY + 116);
         ctx.restore();
         ctx.save();
-        this.btnAlpha =
-          this.btnAlpha >= 1 ? 1 : this.btnAlpha + this.btnChangAlpha;
+        this.btnAlpha >= 1
+          ? ((this.btnAlpha = 1), this.enter(8))
+          : (this.btnAlpha += this.btnChangAlpha);
         ctx.globalAlpha = this.btnAlpha;
         ctx.drawImage(this.btnImg, this.btnX, this.btnY);
         ctx.restore();
@@ -281,8 +284,25 @@ class SceneManager {
           // 点击屏幕, 小鸟向上飞
           game.bird && game.bird.fly();
           break;
-        case 6:
-          this.enter(3);
+        case 7:
+          if (
+            e.offsetX >= this.btnX + 8 &&
+            e.offsetX <= this.btnX + 106 &&
+            e.offsetY >= this.btnY + 5 &&
+            e.offsetY <= this.btnY + 60
+          ) {
+            this.enter(2);
+          }
+          break;
+        case 8:
+          if (
+            e.offsetX >= this.btnX + 8 &&
+            e.offsetX <= this.btnX + 106 &&
+            e.offsetY >= this.btnY + 5 &&
+            e.offsetY <= this.btnY + 60
+          ) {
+            this.enter(3);
+          }
           break;
       }
     };
