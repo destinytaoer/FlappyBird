@@ -40,8 +40,7 @@ class Pipe {
       (bird.y1 < this.y1 || bird.y2 > this.y2)
     ) {
       // 碰撞到了
-      game.stop();
-      console.log('game over');
+      game.sm.enter(4);
     } else if (bird.x1 > this.x2 && !this.isPass) {
       this.isPass = true;
       game.score++;

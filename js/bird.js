@@ -49,8 +49,7 @@ class Bird {
     this.y < minHeight ? (this.y = minHeight) : null;
     if (this.y >= maxHeight) {
       this.y = maxHeight;
-      game.stop();
-      console.log('game over');
+      game.sm.enter(4);
     }
     // 记录 bird 的当前坐标范围, 用于碰撞检测
     // bird 范围相对图片较小, x y 坐标其实是现在 bird 的中心坐标
