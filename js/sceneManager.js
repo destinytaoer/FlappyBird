@@ -20,11 +20,13 @@ class SceneManager {
         this.titleX = (width - this.titleImg.width) / 2;
         this.titleY = -this.titleImg.height; // 初始消失
         this.titleH = height / 4;
+        this.titleChangeY = 5;
         // 按钮
         this.btnImg = game.imgs.get('button_play');
         this.btnX = (width - this.btnImg.width) / 2;
         this.btnY = height; // 初始消失
         this.btnH = (height / 15) * 9;
+        this.btnChangeY = 6.5;
         // 小鸟
         this.birdImg = game.imgs.get('bird2_0');
         this.birdX = (width - this.birdImg.width) / 2;
@@ -69,6 +71,27 @@ class SceneManager {
         this.birdRotate = 60;
         break;
       case 6:
+        // 游戏结束文字
+        this.gameOverImg = game.imgs.get('text_game_over');
+        this.gameOverX = (width - this.gameOverImg.width) / 2;
+        this.gameOverY = -this.gameOverImg.height; // 初始消失
+        this.gameOverH = height / 4;
+        this.gameOverChangeY = 5;
+        // 颁奖面板
+        this.panelImg = game.imgs.get('panel');
+        this.panelW = this.panelImg.width / 2;
+        this.panelH = this.panelImg.height / 2;
+        this.panelX = (width - this.panelW) / 2;
+        this.panelY = height;
+        this.panelMinH = (height - this.panelH) / 2 - 30;
+        this.panelChangeY = 8;
+        // 奖牌
+        this.modelImg = game.imgs.get('model_0');
+        this.modelW = this.modelImg.width / 2;
+        this.modelH = this.modelImg.height / 2;
+        // 开始游戏按钮
+        this.btnAlpha = 0;
+        this.btnChangAlpha = 0;
         break;
     }
   }
@@ -86,7 +109,7 @@ class SceneManager {
         // 绘制游戏标题
         this.titleY >= this.titleH
           ? (this.titleY = this.titleH)
-          : (this.titleY += 5); // 从上往下的动画
+          : (this.titleY += this.titleChangeY); // 从上往下的动画
         ctx.drawImage(this.titleImg, this.titleX, this.titleY);
         // 绘制小鸟
         if (this.birdY > this.birdMaxH || this.birdY < this.birdMinH) {
@@ -95,7 +118,9 @@ class SceneManager {
         this.birdY += this.birdChangeY;
         ctx.drawImage(this.birdImg, this.birdX, this.birdY);
         // 绘制按钮
-        this.btnY <= this.btnH ? (this.btnY = this.btnH) : (this.btnY -= 6.5);
+        this.btnY <= this.btnH
+          ? (this.btnY = this.btnH)
+          : (this.btnY -= this.btnChangeY);
         ctx.drawImage(this.btnImg, this.btnX, this.btnY);
         break;
       case 2:
@@ -167,9 +192,47 @@ class SceneManager {
         ctx.restore();
         break;
       case 6:
-        // 颁奖界面
+        // 游戏结束颁奖界面
         pipes.forEach(pipe => pipe.render());
-        this.scoreRender();
+        this.gameOverY >= this.gameOverH
+          ? (this.gameOverY = this.gameOverH)
+          : (this.gameOverY += this.gameOverChangeY); // 从上往下的动画
+        this.panelY <= this.panelMinH
+          ? ((this.panelY = this.panelMinH), (this.btnChangAlpha = 0.2))
+          : (this.panelY -= this.panelChangeY); // 从下往上的动画
+        ctx.drawImage(this.gameOverImg, this.gameOverX, this.gameOverY);
+        ctx.drawImage(
+          this.panelImg,
+          this.panelX,
+          this.panelY,
+          this.panelW,
+          this.panelH
+        );
+        ctx.drawImage(
+          this.modelImg,
+          this.panelX + 33,
+          this.panelY + 54,
+          this.modelW,
+          this.modelH
+        );
+        // 分数
+        ctx.save();
+        ctx.fillStyle = '#666';
+        ctx.font = '20px consolas';
+        ctx.textAlign = 'center';
+        ctx.fillText(
+          game.score,
+          this.panelX + this.panelW - 52,
+          this.panelY + 62
+        );
+        ctx.fillText('0', this.panelX + this.panelW - 52, this.panelY + 116);
+        ctx.restore();
+        ctx.save();
+        this.btnAlpha =
+          this.btnAlpha >= 1 ? 1 : this.btnAlpha + this.btnChangAlpha;
+        ctx.globalAlpha = this.btnAlpha;
+        ctx.drawImage(this.btnImg, this.btnX, this.btnY);
+        ctx.restore();
         break;
     }
   }
@@ -214,7 +277,8 @@ class SceneManager {
           // 点击屏幕, 小鸟向上飞
           game.bird && game.bird.fly();
           break;
-        case 4:
+        case 6:
+          this.enter(3);
           break;
       }
     };

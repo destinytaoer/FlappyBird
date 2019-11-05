@@ -32,7 +32,10 @@ class Game {
       ['score_6', './imgs/score_6.png'],
       ['score_7', './imgs/score_7.png'],
       ['score_8', './imgs/score_8.png'],
-      ['score_9', './imgs/score_9.png']
+      ['score_9', './imgs/score_9.png'],
+      ['panel', './imgs/panel.png'],
+      ['model_0', './imgs/model_0.png'],
+      ['model_1', './imgs/model_1.png']
     ]);
     this.sceneNo = 1; // 记录当前的场景编号, 初始是第一个场景
 
