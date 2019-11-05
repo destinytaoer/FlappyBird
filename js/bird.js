@@ -12,12 +12,15 @@ class Bird {
     this.birdImg_3 = birdImg_3;
     this.game = game;
 
+    this.init();
+  }
+  init() {
+    let { game } = this;
     // bird 的坐标位置
     this.x = game.canvas.width / 2 - this.w / 2; // 固定 bird 在视图中间, 只是移动背景和管道
     this.y = game.canvas.height / 3; // 初始小鸟的高度
-
-    this.speed = 0; // bird y 方向的初速度
     this.g = 0.5; // 重力加速度
+    this.speed = 0; // bird y 方向的初速度
     this.rotate = 0; // bird 旋转的角度
     this.wing = 2; // bird 翅膀的走向
   }

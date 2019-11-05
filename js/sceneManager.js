@@ -47,6 +47,10 @@ class SceneManager {
         this.birdY = this.tapY - 100;
         break;
       case 3:
+        // 游戏开始进行所有的初始化
+        game.bird.init();
+        game.pipes = new Set();
+        game.score = 0;
         game.speed = 1; // 给定速度,让背景开始移动
         this.pipeTime = 0; // 记录 pipe 出现后的帧数,达到一定值时,再出现一个 pipe
         this.firstPipe = 50; // 第一次出现 pipe 出现的帧数
