@@ -51,6 +51,24 @@ class SceneManager {
         this.initFrame = game.frame; // 记录当前帧数
         break;
       case 4:
+        game.speed = 0; // 停止移动
+        // 获取到当前 bird 的 x,y 坐标
+        this.birdX = game.bird.x;
+        this.birdY = game.bird.y;
+        this.birdW = this.birdImg.width;
+        this.birdH = this.birdImg.height;
+        this.birdRotate = game.bird.rotate;
+        this.birdAlpha = 1; // 初始透明度
+        this.birdChangeAlpha = 0.05;
+        this.time = 100;
+        this.initFrame = game.frame;
+        break;
+      case 5:
+        this.birdMaxH = height;
+        this.birdChangeY = 1;
+        this.birdRotate = 60;
+        break;
+      case 6:
         break;
     }
   }
@@ -111,6 +129,47 @@ class SceneManager {
         this.scoreRender();
         break;
       case 4:
+        // 小鸟碰撞之后闪烁
+        if (game.frame - this.initFrame > this.time) {
+          // 闪烁之后自动进入场景 5
+          this.enter(5);
+        }
+        pipes.forEach(pipe => pipe.render());
+        this.scoreRender();
+        ctx.save();
+        this.birdAlpha -= this.birdChangeAlpha;
+        if (
+          this.birdAlpha < this.birdChangeAlpha + 0.01 ||
+          this.birdAlpha > 1
+        ) {
+          // 这里不能变成 0, 变成 0 会出现闪烁
+          this.birdChangeAlpha *= -1;
+        }
+        ctx.globalAlpha = this.birdAlpha;
+        ctx.translate(this.birdX, this.birdY); // 移动旋转中心
+        ctx.rotate((this.birdRotate * Math.PI) / 180);
+        ctx.drawImage(this.birdImg, -this.birdW / 2, -this.birdH / 2);
+        ctx.restore();
+        break;
+      case 5:
+        // 小鸟碰撞之后, 斜向下掉落
+        pipes.forEach(pipe => pipe.render());
+        this.scoreRender();
+        if (this.birdY >= this.birdMaxH) {
+          this.enter(6);
+        }
+        this.birdY += this.birdChangeY;
+        this.birdChangeY += 0.98;
+        ctx.save();
+        ctx.translate(this.birdX, this.birdY); // 移动旋转中心
+        ctx.rotate((this.birdRotate * Math.PI) / 180);
+        ctx.drawImage(this.birdImg, -this.birdW / 2, -this.birdH / 2);
+        ctx.restore();
+        break;
+      case 6:
+        // 颁奖界面
+        pipes.forEach(pipe => pipe.render());
+        this.scoreRender();
         break;
     }
   }
